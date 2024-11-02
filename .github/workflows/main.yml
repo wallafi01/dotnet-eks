@@ -26,7 +26,7 @@ jobs:
 
 
   CD-Prod:
-    # Condição para rodar somente se o PR for para a branch main
+    # Condição para rodar somente se o PR for para a branch mainn
     if: github.ref == 'refs/heads/main'
     needs: [CI]
     uses: wallafi01/dotnet-eks/.github/workflows/deploy.yml@main    
