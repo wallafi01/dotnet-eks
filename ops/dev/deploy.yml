@@ -75,7 +75,7 @@ spec:
           ports:
             - containerPort: 80
           env:
-            - name: MONGODBCONFIG:CONNECTIONSTRING
+            - name: MONGODBCONFIG_CONNECTIONSTRING
               value: "mongodb://mongo-service.svc.cluster.local:27017"
             - name: ASPNETCORE_ENVIRONMENT
               value: "Development"
