@@ -9,7 +9,15 @@ on:
         deploy_path:
             type: string
             required: true
-            description: 'Caminho do arquivo de deployment'            
+            description: 'Caminho do arquivo de deployment'       
+        manifests:
+            type: string
+            required: true
+            description: "Path to Kubernetes manifests"
+        images:
+            type: string
+            required: true
+            description: "Docker image tags to deploy"                 
     
 jobs:
   build-and-deploy:
@@ -98,14 +106,9 @@ jobs:
         run: aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --region us-east-1
     
       - name: Deploy to EKS
-        env:
-           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}        
-           IMAGE_TAG: ${{ steps.commit.outputs.short }}
-           REPOSITORY: ${{ vars.REPOSITORY }}           
+        env:       
+           IMAGE_TAG: ${{ steps.commit.outputs.short }}         
         run: |
-           sudo wget https://github.com/mikefarah/yq/releases/download/v4.9.8/yq_linux_amd64 -O /usr/bin/yq
-           sudo chmod +x /usr/bin/yq      
            kubectl apply -f "${{ inputs.deploy_path }}/deploy-mongo.yml"
-            yq eval ".spec.template.spec.containers[0].image = \"$ECR_REGISTRY/$REPOSITORY:$IMAGE_TAG\"" -i "${{ inputs.deploy_path }}/deploy.yml"
-           cat "${{ inputs.deploy_path }}/deploy.yml"
-           kubectl apply -f "${{ inputs.deploy_path }}/deploy.yml"
+           sed -i "s|image: REPOSITORY_TAG|image: ${{ inputs.images }}:${{ github.sha }}|g" ${{ inputs.manifests }}
+           kubectl apply -f ${{ inputs.manifests }}    

@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: service1-container
-          image: DOCKER_IMAGE
+          image: REPOSITORY_TAG
           ports:
             - containerPort: 80
           env:
