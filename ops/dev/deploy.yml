@@ -71,7 +71,7 @@ spec:
     spec:
       containers:
         - name: service1-container
-          image: DOCKER_IMAGE
+          image: 216989136189.dkr.ecr.us-east-1.amazonaws.com/iis-gerfloor-dev:latest
           ports:
             - containerPort: 80
           env:
