@@ -21,7 +21,7 @@ jobs:
     uses: wallafi01/dotnet-eks/.github/workflows/deploy.yml@develop 
     with:
       environment: dev
-      deploy_path: "ops/dev/deploy.yml"
+      deploy_path: "ops/dev/"
     secrets: inherit
 
 
@@ -32,5 +32,5 @@ jobs:
     uses: wallafi01/dotnet-eks/.github/workflows/deploy.yml@main    
     with:
       environment: prod
-      deploy_path: "ops/prod/deploy.yml"      
+      deploy_path: "ops/prod/"      
     secrets: inherit
