@@ -1,60 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mongo-deployment
-  namespace: dev
-  labels:
-    app: mongo
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: mongo
-  template:
-    metadata:
-      labels:
-        app: mongo
-    spec:
-      containers:
-        - name: mongo-container
-          image: mongo
-          ports:
-            - containerPort: 27017
-          env:
-            - name: MONGO_INITDB_ROOT_USERNAME
-              value: "root"
-            - name: MONGO_INITDB_ROOT_PASSWORD
-              value: "password"
-          volumeMounts:
-            - name: mongo-storage
-              mountPath: /data/db
-          resources:
-            requests:
-              cpu: "256m"
-              memory: "512Mi"
-          # Configuração de logs similar ao CloudWatch
-          # Aqui, utiliza-se uma configuração simples para logs padrão do contêiner.
-      volumes:
-        - name: mongo-storage
-          emptyDir: {}
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: mongo-service
-  namespace: dev
-spec:
-  selector:
-    app: mongo
-  ports:
-    - protocol: TCP
-      port: 27017
-      targetPort: 27017
-  clusterIP: None  # Para que o MongoDB seja acessível dentro do cluster
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
   name: service1-deployment
   namespace: dev
   labels:
@@ -71,7 +17,7 @@ spec:
     spec:
       containers:
         - name: service1-container
-          image: 216989136189.dkr.ecr.us-east-1.amazonaws.com/iis-gerfloor-dev:latest
+          image: DOCKER_IMAGE
           ports:
             - containerPort: 80
           env:
