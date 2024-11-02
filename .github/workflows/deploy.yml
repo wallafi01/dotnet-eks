@@ -102,5 +102,5 @@ jobs:
            ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}        
            IMAGE_TAG: ${{ steps.commit.outputs.short }}
         run: |
-           sed -i.bak "s|DOCKER_IMAGE|$ECR_REGISTRY/$REPOSITORY:$IMAGE_TAG|g" "${{ inputs.deploy_path }}" && \
+           sed -i "s|image: DOCKER_IMAGE|image: $ECR_REGISTRY/$REPOSITORY:$IMAGE_TAG|g" "${{ inputs.deploy_path }}" && \
            kubectl apply -f "${{ inputs.deploy_path }}"
