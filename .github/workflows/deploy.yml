@@ -101,10 +101,11 @@ jobs:
         env:
            ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}        
            IMAGE_TAG: ${{ steps.commit.outputs.short }}
+           REPOSITORY: ${{ vars.REPOSITORY }}           
         run: |
-           sudo wget https://github.com/mikefarah/yq/releases/download/v4.9.8/yq_linux_amd64 -O /usr/bin/yq && \
-           sudo chmod +x /usr/bin/yq        
+           sudo wget https://github.com/mikefarah/yq/releases/download/v4.9.8/yq_linux_amd64 -O /usr/bin/yq
+           sudo chmod +x /usr/bin/yq      
            kubectl apply -f "${{ inputs.deploy_path }}/deploy-mongo.yml"
-           yq eval ".spec.template.spec.containers[0].image = \"$ECR_REGISTRY/$REPOSITORY:$IMAGE_TAG\"" -i "${{ inputs.deploy_path }}/deploy.yml"
+            yq eval ".spec.template.spec.containers[0].image = \"$ECR_REGISTRY/$REPOSITORY:$IMAGE_TAG\"" -i "${{ inputs.deploy_path }}/deploy.yml"
            cat "${{ inputs.deploy_path }}/deploy.yml"
            kubectl apply -f "${{ inputs.deploy_path }}/deploy.yml"
