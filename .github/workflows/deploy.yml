@@ -103,5 +103,5 @@ jobs:
            IMAGE_TAG: ${{ steps.commit.outputs.short }}
         run: |
            kubectl apply -f "${{ inputs.deploy_path }}/deploy-mongo.yml"
-           sed -i "s|image: DOCKER_IMAGE|image: $ECR_REGISTRY/$REPOSITORY:$IMAGE_TAG|g" "${{ inputs.deploy_path }}"
+           sed -i "s|image: DOCKER_IMAGE|image: $ECR_REGISTRY/$REPOSITORY:$IMAGE_TAG|g" "${{ inputs.deploy_path }}/deploy.yml"
            kubectl apply -f "${{ inputs.deploy_path }}/deploy.yml"
