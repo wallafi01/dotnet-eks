@@ -38,3 +38,4 @@ jobs:
       manifests: ops/prod/deploy.yml
       images: 216989136189.dkr.ecr.us-east-1.amazonaws.com/iis-gerfloor-prod
     secrets: inherit
+    
