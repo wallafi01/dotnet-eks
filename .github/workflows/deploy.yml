@@ -42,12 +42,10 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG: ${{ github.sha }}
           REPOSITORY: ${{ vars.REPOSITORY }}
         run: |
-          docker build -t $ECR_REGISTRY/$REPOSITORY:$IMAGE_TAG -f ./BookManager/Dockerfile .
-          docker push $ECR_REGISTRY/$REPOSITORY:$IMAGE_TAG
-          echo "image=$ECR_REGISTRY/$REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT    
+          docker build -t $ECR_REGISTRY/$REPOSITORY:${{ github.sha }} -f ./BookManager/Dockerfile .
+          docker push $ECR_REGISTRY/$REPOSITORY:${{ github.sha }}  
          
       - name: Set up cache for Trivy DB
         uses: actions/cache@v3
