@@ -1,4 +1,4 @@
-
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -23,13 +23,13 @@ spec:
             - containerPort: 80
           env:
             - name: MONGODBCONFIG_CONNECTIONSTRING
-              value: "mongodb://mongo-service.svc.cluster.local:27017"
+              value: mongodb://mongo-service.svc.cluster.local:27017
             - name: ASPNETCORE_ENVIRONMENT
-              value: "Development"
+              value: Development
           resources:
             requests:
-              cpu: "256m"
-              memory: "512Mi"
+              cpu: 256m
+              memory: 512Mi
 
 ---
 apiVersion: v1
@@ -45,4 +45,3 @@ spec:
       port: 80
       targetPort: 80
   type: LoadBalancer
-
