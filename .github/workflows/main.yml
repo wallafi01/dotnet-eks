@@ -21,16 +21,20 @@ jobs:
     uses: wallafi01/dotnet-eks/.github/workflows/deploy.yml@develop 
     with:
       environment: dev
-      deploy_path: "ops/dev/deploy.yml"
+      deploy_path: "ops/dev"      
+      manifests: ops/dev/deploy.yml
+      images: 216989136189.dkr.ecr.us-east-1.amazonaws.com/iis-gerfloor-dev
     secrets: inherit
 
 
   CD-Prod:
-    # Condição para rodar somente se o PR for para a branch main
+    # Condição para rodar somente se o PR for para a branch mainn
     if: github.ref == 'refs/heads/main'
     needs: [CI]
     uses: wallafi01/dotnet-eks/.github/workflows/deploy.yml@main    
     with:
       environment: prod
-      deploy_path: "ops/prod/deploy.yml"      
+      deploy_path: "ops/prod"      
+      manifests: ops/prod/deploy.yml
+      images: 216989136189.dkr.ecr.us-east-1.amazonaws.com/iis-gerfloor-prod
     secrets: inherit
